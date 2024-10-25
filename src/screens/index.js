@@ -30,7 +30,7 @@ import RoundUp from './MainStackScreens/RoundUp/RoundUp';
 import AnalysisData from './MainStackScreens/AnalysisData/AnalysisData';
 import PrivacyPolicy from './MainStackScreens/PrivacyPolicy/PrivacyPolicy';
 import Document from './MainStackScreens/Document/Document';
-import Referral from './MainStackScreens/ Referral/ Referral';
+import Referral from './MainStackScreens/Referral/Referral';
 import HelpSupport from './MainStackScreens/HelpSupport/HelpSupport';
 import KycDocuments from './MainStackScreens/KycDocuments/KycDocuments';
 import OpenYourAccount from './MainStackScreens/OpenYourAccount/OpenYourAccount';
@@ -59,6 +59,7 @@ import MarketPlace from './MainStackScreens/MarketPlace/MarketPlace';
 import CarDetail from './MainStackScreens/CarDetail/CarDetail';
 import Subscription from './MainStackScreens/Subscription/Subscription';
 import BillPayProfile from './MainStackScreens/BillPayProfile/BillPayProfile';
+
 export {
   OnBoarding,
   Login,

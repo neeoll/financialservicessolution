@@ -7,7 +7,7 @@ import {RNText} from '.';
 import RNRoundImage from './RNRoundImage';
 import colors from '../constants/colors';
 
-export default function RNProfileHeader({navigation}) {
+export default function RNProfileHeader({ user, navigation }) {
   return (
     <View
       style={[
@@ -18,7 +18,7 @@ export default function RNProfileHeader({navigation}) {
         <RNRoundImage size={13} />
         <View style={commonStyles.marginLeftWp2}>
           <RNText style={styles.welcomeText}>{Strings.welcomeBack}</RNText>
-          <RNText style={styles.userName}>{'jennie hooks'}</RNText>
+          <RNText style={styles.userName}>{user?.fullName || ""}</RNText>
         </View>
       </View>
       <View>

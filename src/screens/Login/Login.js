@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
+import React, {useContext, useState} from 'react';
 import {
   RNCheckBox,
   RNContainer,
@@ -18,8 +18,47 @@ import {Fonts, hp, Images, Screens, Strings, wp} from '../../constants';
 import colors from '../../constants/colors';
 import RNButton from '../../components/RNButton';
 import {navigationReset, navigationTo} from '../../navigations';
+import { authAPI } from '../../api';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Login({navigation}) {
+  const [inputState, setInputState] = useState([
+    {
+      key: 'email',
+      label: 'Email',
+      value: '',
+    },
+    {
+      key: 'password',
+      label: 'Password',
+      value: '',
+      secure: true,
+    },
+  ]);
+
+  const renderInput = (itm, index) => {
+    return (
+      <RNTextInput
+        secureTextEntry={itm.secure}
+        containerStyle={styles.emailInputContainer}
+        label={itm.label}
+        placeholder={itm.label}
+        onInput={data => {
+          setInputState(
+            inputState.map(itmx =>
+              itmx.key === itm.key
+              ? {
+                  ...itmx,
+                  value: data
+                }
+              : itmx,
+            ),
+          );
+        }}
+      />
+    );
+  }
+
   return (
     <RNContainer useScroll edges={['top']}>
       <RNImage
@@ -29,14 +68,7 @@ export default function Login({navigation}) {
       <View>
         <RNText style={styles.signInText}>{Strings.signIn}</RNText>
         <RNText style={styles.loginText}>{Strings.loginTxt}</RNText>
-        <RNTextInput
-          containerStyle={styles.emailInputContainer}
-          label={Strings.email}
-          placeholder={Strings.demoEmail}></RNTextInput>
-        <RNTextInput
-          secureTextEntry={true}
-          label={Strings.password}
-          placeholder={Strings.password}></RNTextInput>
+        {inputState.map((itm, index) => renderInput(itm, index))}
         <View style={styles.rememberForgotContainer}>
           <View style={styles.rememberContainer}>
             <View>
@@ -52,7 +84,18 @@ export default function Login({navigation}) {
         </View>
         <RNButton
           onPress={() => {
-            navigationReset(navigation, Screens.TabRoutes);
+            authAPI.login(inputState)
+            .then(response => {
+              if (response.ok) return response.json()
+              if (response.status == 401) throw new Error('Invalid username or password')
+            })
+            .then(json => {
+              AsyncStorage.setItem("auth", json.token)
+              navigationTo(navigation, Screens.TabRoutes);
+            })
+            .catch(error => {
+              console.error(error)
+            })
           }}
           activeOpacity={0.5}
           title={Strings.login}

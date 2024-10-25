@@ -23,6 +23,7 @@ import TextGradient from '../../components/GradientText';
 import styles from './style';
 import {Image} from 'react-native-svg';
 import commonStyles from '../../styles/commonStyles';
+import { authAPI } from '../../api';
 if (
   Platform.OS === 'android' &&
   UIManager.setLayoutAnimationEnabledExperimental
@@ -47,8 +48,8 @@ export default function SignUp({navigation}) {
       key: 'phoneNumber',
       label: 'Phone Number',
       value: '',
-      countryCode: 'IN',
-      countryNumber: '91',
+      countryCode: 'US',
+      countryNumber: '1',
     },
     {
       key: 'email',
@@ -117,8 +118,19 @@ export default function SignUp({navigation}) {
         <RNCountryInput
           selectedCountry={itm.countryCode}
           countryNumber={itm.countryNumber}
+          onInput={data => {
+            setInputState(
+              inputState.map(itmx =>
+                itmx.key === itm.key
+                ? {
+                    ...itmx,
+                    value: data
+                  }
+                : itmx,
+              ),
+            );
+          }}
           onSelectCountry={data => {
-            console.log(data);
             setInputState(
               inputState.map(itmx =>
                 itmx.key === 'phoneNumber'
@@ -142,6 +154,18 @@ export default function SignUp({navigation}) {
         containerStyle={styles.emailInputContainer}
         label={itm.label}
         placeholder={itm.label}
+        onInput={data => {
+          setInputState(
+            inputState.map(itmx =>
+              itmx.key === itm.key
+              ? {
+                  ...itmx,
+                  value: data
+                }
+              : itmx,
+            ),
+          );
+        }}
       />
     );
   };
@@ -169,8 +193,19 @@ export default function SignUp({navigation}) {
         {/* btn signup */}
         <RNButton
           onPress={() => {
-            LayoutAnimation.configureNext(LayoutAnimation.Presets.linear);
-            setCurrentTab(currentTab === 2 ? 0 : currentTab + 1);
+            authAPI.register(inputState)
+            .then(response => {
+              if (response.ok) return response.json()
+              throw new Error('Something went wrong')
+            })
+            .then(json => {
+              console.log(json)
+              LayoutAnimation.configureNext(LayoutAnimation.Presets.linear);
+              setCurrentTab(currentTab === 2 ? 0 : currentTab + 1);
+            })
+            .catch(error => {
+              console.error(error)
+            })
           }}
           activeOpacity={0.5}
           title={Strings.signUp}

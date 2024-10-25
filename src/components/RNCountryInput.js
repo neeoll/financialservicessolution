@@ -19,6 +19,7 @@ export default function RNCountryInput({
   onSelectCountry,
   selectedCountry,
   countryNumber,
+  onInput,
   ...restProps
 }) {
   const [visible, setVisible] = useState(false);
@@ -30,7 +31,7 @@ export default function RNCountryInput({
         <CountryPicker
           onClose={() => setVisible(false)}
           visible={visible}
-          countryCode={selectedCountry ?? 'IN'}
+          countryCode={selectedCountry ?? 'US'}
           withFilter
           withCallingCode
           onSelect={country => onSelectCountry(country)}
@@ -49,6 +50,7 @@ export default function RNCountryInput({
         </TouchableOpacity>
         <TextInput
           {...restProps}
+          onChangeText={value => onInput(value)}
           style={[styles.textInput, style]}
           placeholderTextColor={colors.GREY_2}
         />

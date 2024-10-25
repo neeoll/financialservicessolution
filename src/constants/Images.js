@@ -1,6 +1,7 @@
 const tabImagePath = '../assets/Images/tabIcons/';
 const profileTabImagePath = '../assets/Images/profilePageIcons/';
 export default {
+  defaultProfile: require('../assets/Images/default_profile.png'),
   OnBoardingBg: require('../assets/Images/OnBoardingBg.png'),
   logo: require('../assets/Images/logo.png'),
   eyeOpen: require('../assets/Images/eyeOpen.png'),

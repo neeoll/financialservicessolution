@@ -24,6 +24,7 @@ export default function RNTextInput({
   leftIcon,
   rightTextBtn,
   rightImg,
+  onInput,
   ...restProps
 }) {
   const [visible, setVisible] = useState(false);
@@ -44,6 +45,7 @@ export default function RNTextInput({
         )}
         <TextInput
           {...restProps}
+          onChangeText={value => onInput(value)}
           secureTextEntry={visible}
           style={[styles.textInput, style]}
           placeholderTextColor={colors.GREY_2}></TextInput>

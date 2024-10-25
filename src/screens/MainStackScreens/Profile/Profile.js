@@ -7,7 +7,8 @@ import {Images, Screens, Strings} from '../../../constants';
 import {FlatList, TouchableOpacity, View} from 'react-native';
 import RNRoundImage from '../../../components/RNRoundImage';
 import RNTransParentBtn from '../../../components/RNTransParentBtn';
-import {navigationTo} from '../../../navigations';
+import {navigationReset, navigationTo} from '../../../navigations';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const option = [
   {
@@ -95,6 +96,12 @@ const moreOption = [
 ];
 
 const Profile = props => {
+
+  const handleLogout = async () => {
+    await AsyncStorage.removeItem("auth")
+    navigationTo(props.navigation, Screens.OnBoarding)
+  }
+
   const profileHeader = () => {
     return (
       <TouchableOpacity
@@ -234,6 +241,7 @@ const Profile = props => {
           keyExtractor={(item, index) => index.toString()}
         />
         <RNTransParentBtn
+          onPress={() => handleLogout()}
           leftIcon={Images.logout}
           title={Strings.logout}
           textStyle={styles.logoutText}

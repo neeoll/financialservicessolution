@@ -72,6 +72,9 @@ export default function (Stack) {
         component={TabRoutes}
         options={{headerShown: false}}
       />
+      <Stack.Screen name={Screens.OnBoarding} component={OnBoarding} />
+      <Stack.Screen name={Screens.Login} component={Login} />
+      <Stack.Screen name={Screens.SignUp} component={SignUp} />
       {/* <Stack.Screen name={Screens.PackageDetails} component={PackageDetails} /> */}
       {/* <Stack.Screen name={Screens.PaymentPackage} component={PaymentPackage} /> */}
       <Stack.Screen name={Screens.UpdateProfile} component={UpdateProfile} />
@@ -120,15 +123,9 @@ export default function (Stack) {
       <Stack.Screen name={Screens.Referral} component={Referral} />
       <Stack.Screen name={Screens.HelpSupport} component={HelpSupport} />
       <Stack.Screen name={Screens.KycDocuments} component={KycDocuments} />
-      <Stack.Screen
-        name={Screens.OpenYourAccount}
-        component={OpenYourAccount}
-      />
+      <Stack.Screen name={Screens.OpenYourAccount} component={OpenYourAccount} />
       <Stack.Screen name={Screens.VerifyMail} component={VerifyMail} />
-      <Stack.Screen
-        name={Screens.AccountConfirmation}
-        component={AccountConfirmation}
-      />
+      <Stack.Screen name={Screens.AccountConfirmation} component={AccountConfirmation} />
       <Stack.Screen name={Screens.ConsentScreen} component={ConsentScreen} />
       <Stack.Screen name={Screens.MobileScreen} component={MobileScreen} />
       <Stack.Screen name={Screens.VerifyIdentity} component={VerifyIdentity} />

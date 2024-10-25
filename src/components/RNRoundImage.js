@@ -6,7 +6,7 @@ import { View } from 'react-native';
 import { RNImage } from '.';
 
 const RNRoundImage = ({
-    img = Images.NetflixLogo,
+    img = Images.defaultProfile,
     size = 10,
     bgColor = colors.GREY,
     style,

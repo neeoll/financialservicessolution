@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {View, FlatList, TouchableOpacity} from 'react-native';
 import {RNContainer, RNImage, RNText} from '../../../components';
 import styles from './styles';
@@ -9,6 +9,8 @@ import RNSlider from '../../../components/RNSlider';
 import RNButton from '../../../components/RNButton';
 import RNProfileHeader from '../../../components/RNProfileHeader';
 import {navigationTo} from '../../../navigations';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { authAPI } from '../../../api';
 const cardList = [
   {
     cardTitle: 'Current Balance',
@@ -87,6 +89,26 @@ const futureList = [
   },
 ];
 const Home = props => {
+  const [userData, setUserData] = useState()
+  
+  useEffect(() => {
+    const getUserData = async () => {
+      const auth = await AsyncStorage.getItem("auth")
+      authAPI.user(auth)
+      .then(response => {
+        if (response.ok) return response.json()
+        throw new Error("Something went wrong")
+      })
+      .then(json => {
+        setUserData(json.user)
+      })
+      .catch(error => {
+        console.error(error)
+      })
+    }
+    getUserData()
+  }, [])
+
   const servicesList = [
     {
       name: 'Send',
@@ -292,7 +314,7 @@ const Home = props => {
   };
   return (
     <RNContainer adjustTabBarHeight useScroll edges={['top']}>
-      <RNProfileHeader navigation={props.navigation} />
+      <RNProfileHeader user={userData} navigation={props.navigation} />
       <View style={styles.sliderView}>
         <RNSlider data={cardList} type={'card'} />
       </View>
